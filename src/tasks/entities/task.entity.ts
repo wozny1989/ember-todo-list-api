@@ -14,7 +14,7 @@ export class Task {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ default: false })
   isDone: boolean;
 
   @UpdateDateColumn()

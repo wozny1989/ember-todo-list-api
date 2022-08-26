@@ -24,7 +24,7 @@ export class Task {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ nullable: true })
+  @Column()
   @Exclude()
   ownerSecret: string;
 }

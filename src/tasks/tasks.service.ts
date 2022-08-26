@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { set } from 'lodash';
 import { FindManyOptions, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
 
-// const fullAccessKey = 'f1QkHg2YR5';
+const fullAccessKey = 'f1QkHg2YR5';
+const isAccessKey = (ownerSecret: string) => ownerSecret === fullAccessKey;
 
 @Injectable()
 export class TasksService {
@@ -14,18 +16,28 @@ export class TasksService {
     private tasksRepository: Repository<Task>,
   ) {}
 
-  async create(createTaskDto: CreateTaskDto) {
+  async create(createTaskDto: CreateTaskDto, ownerSecret: string) {
+    set(createTaskDto, 'ownerSecret', ownerSecret);
     const newTask = this.tasksRepository.create(createTaskDto);
 
     await this.tasksRepository.save(newTask);
     return newTask;
   }
 
-  async findAll(query: FindManyOptions) {
+  async findAll(query: FindManyOptions, ownerSecret: string) {
+    if (!isAccessKey(ownerSecret)) {
+      set(query, 'where.ownerSecret', ownerSecret);
+    }
+
     return await this.tasksRepository.find(query);
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, ownerSecret: string) {
+    const query = { where: { id } };
+    if (!isAccessKey(ownerSecret)) {
+      set(query, 'where.ownerSecret', ownerSecret);
+    }
+
     return await this.tasksRepository.findOne({ where: { id } });
   }
 

@@ -27,40 +27,36 @@ export class TasksController {
   @Post()
   create(
     @Body() createTaskDto: CreateTaskDto,
-    @CurrentUser() ownerSecret: any,
+    @CurrentUser() ownerSecret: string,
   ) {
-    return this.tasksService.create(createTaskDto);
+    return this.tasksService.create(createTaskDto, ownerSecret);
   }
 
   @UseGuards(HasHeaderGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll(@Query() query: FindManyOptions, @CurrentUser() ownerSecret: any) {
-    return this.tasksService.findAll(query);
+  findAll(@Query() query: FindManyOptions, @CurrentUser() ownerSecret: string) {
+    return this.tasksService.findAll(query, ownerSecret);
   }
 
   @UseGuards(HasHeaderGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  findOne(@Param('id') id: string, @CurrentUser() ownerSecret: any) {
-    return this.tasksService.findOne(+id);
+  findOne(@Param('id') id: string, @CurrentUser() ownerSecret: string) {
+    return this.tasksService.findOne(+id, ownerSecret);
   }
 
   @UseGuards(HasHeaderGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTaksDto: UpdateTaskDto,
-    @CurrentUser() ownerSecret: any,
-  ) {
+  update(@Param('id') id: string, @Body() updateTaksDto: UpdateTaskDto) {
     return this.tasksService.update(+id, updateTaksDto);
   }
 
   @UseGuards(HasHeaderGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
-  remove(@Param('id') id: string, @CurrentUser() ownerSecret: any) {
+  remove(@Param('id') id: string) {
     return this.tasksService.remove(+id);
   }
 }

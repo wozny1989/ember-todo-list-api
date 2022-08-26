@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   Column,
@@ -22,4 +23,8 @@ export class Task {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({ nullable: true })
+  @Exclude()
+  ownerSecret: string;
 }

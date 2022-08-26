@@ -26,6 +26,8 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+/app.yaml
+/cloud_sql_proxy
 
 # IDE - VSCode
 .vscode/*

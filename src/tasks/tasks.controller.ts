@@ -14,7 +14,6 @@ import {
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { FindManyOptions } from 'typeorm';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { HasHeaderGuard } from 'src/guards/has-header-guard';
 
@@ -35,8 +34,8 @@ export class TasksController {
   @UseGuards(HasHeaderGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll(@Query() query: FindManyOptions, @CurrentUser() ownerSecret: string) {
-    return this.tasksService.findAll(query, ownerSecret);
+  findAll(@Query('status') status: string, @CurrentUser() ownerSecret: string) {
+    return this.tasksService.findAll(status, ownerSecret);
   }
 
   @UseGuards(HasHeaderGuard)

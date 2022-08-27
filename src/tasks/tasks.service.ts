@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { set } from 'lodash';
-import { FindManyOptions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './entities/task.entity';
@@ -24,7 +24,13 @@ export class TasksService {
     return newTask;
   }
 
-  async findAll(query: FindManyOptions, ownerSecret: string) {
+  async findAll(status: string, ownerSecret: string) {
+    const query = {};
+    if (['active', 'completed'].includes(status)) {
+      const findIsDone = status === 'completed';
+      set(query, 'where.isDone', findIsDone);
+    }
+
     if (!isAccessKey(ownerSecret)) {
       set(query, 'where.ownerSecret', ownerSecret);
     }

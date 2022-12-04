@@ -18,6 +18,9 @@ lerna-debug.log*
 /coverage
 /.nyc_output
 
+# Database
+/ember-todo-list.db
+
 # IDEs and editors
 /.idea
 .project

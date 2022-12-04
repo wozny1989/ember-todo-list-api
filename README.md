@@ -58,6 +58,20 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Database
+
+```bash
+# clear database
+npm run clearDB
+
+# restore database with example data
+npm run restoreDB
+```
+
+## API Documentation
+
+- https://adam-wozny-1.gitbook.io/api-docs/
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

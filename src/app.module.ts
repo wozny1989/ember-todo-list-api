@@ -8,12 +8,8 @@ import { Task } from './tasks/entities/task.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: '123456',
-      database: 'ember-todo-list',
+      type: 'sqlite',
+      database: 'ember-todo-list.db',
       entities: [Task],
       synchronize: true,
     }),
